@@ -1,38 +1,37 @@
 pipeline {
    agent any
-   checkout(
-     [
-       $class: 'GitSCM', 
-       branches: [
-         [
-           name: '*/master'
-         ]
-       ], 
-       doGenerateSubmoduleConfigurations: false, 
-       extensions: [
-         [
-           $class: 'SubmoduleOption', 
-           disableSubmodules: false, 
-           parentCredentials: true, 
-           recursiveSubmodules: true, 
-           reference: '', 
-           trackingSubmodules: false
-         ]
-       ], 
-       submoduleCfg: [], 
-       userRemoteConfigs: [
-         [
-           url: 'https://github.com/sasidhar-awsdevops/mainrepo.git'
-         ]
-       ]
-     ]
-   )
-
     stages {
         stage('Build') {
             steps {
                 echo "Build Step in Main repo"
+                checkout(
+                  [
+                    $class: 'GitSCM', 
+                    branches: [
+                      [
+                        name: '*/master'
+                      ]
+                    ], 
+                    doGenerateSubmoduleConfigurations: false, 
+                    extensions: [
+                      [
+                        $class: 'SubmoduleOption', 
+                        disableSubmodules: false, 
+                        parentCredentials: true, 
+                        recursiveSubmodules: true, 
+                        reference: '', 
+                        trackingSubmodules: false
+                      ]
+                    ], 
+                    submoduleCfg: [], 
+                    userRemoteConfigs: [
+                      [
+                        url: 'https://github.com/sasidhar-awsdevops/mainrepo.git'
+                      ]
+                    ]
+                  ]
+                )
             }
         }
-  }
+    }
 }
